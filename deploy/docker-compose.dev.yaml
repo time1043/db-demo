@@ -1,0 +1,30 @@
+# docker compose -f deploy/docker-compose.dev.yaml --env-file deploy/.env.development up -d
+# docker compose -f deploy/docker-compose.dev.yaml up -d
+# docker compose -f deploy/docker-compose.dev.yaml down
+
+name: postgres-dev
+
+services:
+  # docker exec -it postgres-dev bash
+  # psql -U user123 -d db123
+  # docker exec -it postgres-dev psql -U user123 -d db123
+  postgres:
+    image: postgres:15
+    container_name: postgres-dev
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASS:-password}
+      POSTGRES_DB: ${DB_NAME:-postgres}
+    # env_file:
+    #   - .env.development
+    volumes:
+      - ../data/postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
