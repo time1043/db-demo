@@ -7,17 +7,27 @@
   "author": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc --noEmit && tsx watch src/main.ts",
+    "db:generate": "dotenv -e ./deploy/.env.development -- drizzle-kit generate",
+    "db:migrate": "dotenv -e ./deploy/.env.development -- drizzle-kit migrate",
+    "db:push": "dotenv -e ./deploy/.env.development -- drizzle-kit push",
+    "db:studio": "dotenv -e ./deploy/.env.development -- drizzle-kit studio",
+    "dev": "tsc --noEmit && dotenv -e ./deploy/.env.development -- tsx watch src/main.ts",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check"
   },
   "dependencies": {
-    "tsx": "^4.22.3"
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
+    "pg": "^8.21.0"
   },
   "devDependencies": {
     "@tsconfig/node-lts": "^24.0.0",
     "@types/node": "^25.9.1",
+    "@types/pg": "^8.20.0",
+    "dotenv-cli": "^11.0.0",
+    "drizzle-kit": "^0.31.10",
     "oxfmt": "^0.51.0",
+    "tsx": "^4.22.3",
     "typescript": "^6.0.3"
   },
   "packageManager": "pnpm@10.18.0"
